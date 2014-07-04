@@ -9,19 +9,40 @@
         <div class="col-md-12">
             <h2>Logs for: @Model.Key</h2>
             
-            <ul class="list-unstyled">
-                @foreach (var log in Model.Logs)
-                {
-                    <li>
-                        <h3>@log.DateCreated</h3>
-                        <div class="pretty-json" data-prettify-json="true">@log.LogJson</div>
-                    </li>
-                }
-                @if (!Model.Logs.Any())
-                {
-                    <li>There are no logs for this key.</li>
-                }
-            </ul>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Request Date</th>
+                        <th>Verb</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var log in Model.Logs)
+                    {
+                        <tr>
+                            <td>@log.DateCreated</td>
+                            <td>@log.Verb</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <h4>Headers</h4>
+                                <div class="pretty-json" data-prettify-json="true">@log.HeaderJson</div>
+                            </td>                            
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <h4>Body</h4>
+                                <div class="pretty-json" data-prettify-json="true">@log.LogJson</div>
+                            </td>                            
+                        </tr>
+
+                    }
+                    @if (!Model.Logs.Any())
+                    {
+                        <tr><td colspan="2" class="text-center">There are no logs for this key.</td></tr>
+                    }
+                </tbody>
+            </table>            
         </div>
     </div>
 </div>

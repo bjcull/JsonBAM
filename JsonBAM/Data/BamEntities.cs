@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using JsonBAM.Data.Entities;
+using JsonBAM.Migrations;
 
 namespace JsonBAM.Data
 {
@@ -13,6 +14,13 @@ namespace JsonBAM.Data
 
         public BamEntities()
         {
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<BamEntities, Configuration>());
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

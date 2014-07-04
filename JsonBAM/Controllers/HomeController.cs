@@ -33,7 +33,9 @@ namespace JsonBAM.Controllers
                         Id = x.Id,
                         Key = x.Key,
                         DateCreated = x.DateCreated,
-                        LogJson = x.LogJson
+                        LogJson = x.LogJson,
+                        HeaderJson = x.HeaderJson,
+                        Verb = x.Verb
                     })
                     .ToList();
                 
