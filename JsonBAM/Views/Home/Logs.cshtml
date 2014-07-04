@@ -1,0 +1,64 @@
+﻿@model JsonBAM.Models.LogsVM
+
+@{
+    ViewBag.Title = "Logs";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Logs for: @Model.Key</h2>
+            
+            <ul class="list-unstyled">
+                @foreach (var log in Model.Logs)
+                {
+                    <li>
+                        <h3>@log.DateCreated</h3>
+                        <div class="pretty-json" data-prettify-json="true">@log.LogJson</div>
+                    </li>
+                }
+                @if (!Model.Logs.Any())
+                {
+                    <li>There are no logs for this key.</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(function() {
+            $("div[data-prettify-json=true]").each(function(e, t) {
+                var pre = $("<pre/>");
+                pre.html(syntaxHighlight(JSON.stringify(JSON.parse($(this).text()), undefined, 4)));
+                $(this).replaceWith(pre);
+            });
+
+            $(".view-json").click(function() {
+                console.log("#" + $(this).data("id"));
+                $("#" + $(this).data("id")).slideToggle("fast");
+            });
+        });
+
+        function syntaxHighlight(json) {
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
+                var cls = 'number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'key';
+                    } else {
+                        cls = 'string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
+    </script>
+}

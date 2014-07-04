@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "JsonBAM | A super rad webhook tester";
+}
+
+<div class="row">
+    <div class="col-sm-4">
+        <h2>What is JsonBAM?</h2>
+        <p>A super rad way to test json-based webhooks. Just supply our url to the webhook provider and we'll record whatever json they send.</p>
+    </div>
+    <div class="col-sm-8">
+        <h2>Usage Instructions:</h2>
+        <p>
+            Pick a random string to use as a key and then provide this url to your webhook provider:
+            <code>http://@(Request.Url.Host)/HitMe/my-madeup-key</code>
+        </p>
+        <p>
+            Then supply the key above to view the logs. Too Easy.
+        </p>
+    </div>
+</div>
